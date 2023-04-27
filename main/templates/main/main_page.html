@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #51557E;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+    }
+    header {
+        background-color: #1B2430;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999;
+    }
+    
+    nav ul {
+        list-style: none;
+        display: flex;
+        align-items: center;
+    }
+    
+    nav ul li {
+        margin-right: 20px;
+    }
+    
+    nav ul li:last-child {
+        margin-right: 0;
+    }
+    
+    nav ul li a {
+        color: #000000;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+        color: #fff;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+    
+    h1 {
+        font-size: 36px;
+        margin-bottom: 40px;
+    }
+    
+    p {
+        margin-bottom: 20px;
+    }
+    
+    .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #fff;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    
+    .button:hover {
+        background-color: #006600;
+    }
+    
+    footer {
+        background-color: #1B2430;
+        color: #1B2430;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    footer p {
+        margin: 0;
+        color: #fff;
+    }
+</style>
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="/csvs/upload">Data Loader</a></li>
+        </ul>
+    </nav>
+    <div id="logo"></div>
+</header>
+
+<div class="container">
+    <h1>Sensor Data Visualizer </h1>
+
+    <form method="GET" acton="{% url 'main_page' %}">
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+    {{ chart | safe }}
+</div>
+
+<footer>
+    <p>Sensor Data Tracking - CSE 550 Group 5 </p>
+</footer>
+
+{% endblock content %}
