@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a href="/csvs/upload">Data Loader</a></li>
+        </ul>
+    </nav>
+    <div id="logo"></div>
+</header>
+<div class="container">
+
+    <h1>Summary Statistics</h1>
+
+    <form method="GET" acton="{% url 'main_page' %}">
+        {{form.as_p}}
+        <button type="submit">Submit</button>
+    </form>
+    {{df|safe}}
+
+</div>
+
+<footer>
+    <p>Sensor Data Tracking - CSE 550 Group 5 </p>
+</footer>
+
+{% endblock content %}

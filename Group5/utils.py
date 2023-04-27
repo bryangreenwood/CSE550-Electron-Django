@@ -1,6 +1,7 @@
 
 
 def eval_bool(bool_str):
+    ''' Converts string of true or false into boolean value'''
     if bool_str == 'TRUE':
         return True
     elif bool_str == 'FALSE':
@@ -12,6 +13,7 @@ def eval_bool(bool_str):
 import pandas as pd
 
 def style_df(df):
+    ''' Function to style the dataframe for the summary statistics table '''
     return (df.style
             .set_properties(**{'font-family': 'Arial, sans-serif', 
                                'font-size': '16px', 

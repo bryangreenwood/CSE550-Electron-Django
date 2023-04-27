@@ -52,14 +52,13 @@ def main_page(request):
 
         # Create dt from string for list comprehension
         start = datetime.strptime(start, '%Y-%m-%d')
-        end = datetime.strptime(end, '%Y-%m-%d')
+        end = datetime.strptime(end, '%Y-%m-%d') 
 
         data = [x for x in data if x.UTC_Datetime >= start and x.UTC_Datetime <= end]  # Refilter with python list since Django QuerySet would just rehit the db and mess up the timezone
         data.sort(key=lambda x: x.UTC_Datetime, reverse=True) # Makeshift orderby
 
         # DF for summary statistics
-        df = pandas.DataFrame(data.values())
-        df = df.drop(columns=['id', 'sensor_id', 'UTC_Datetime', 'timezone_offset', 'UNIX_timestamp'])
+        df = pandas.DataFrame(data)
 
     else: # Query db to get filters data with default UTC
         data = Sensordata.objects.filter(sensor__sensor_number=device, UTC_Datetime__range=[start, end]).order_by('UTC_Datetime')
@@ -91,21 +90,22 @@ def main_page(request):
 
         for index, each in enumerate(y_axis):
 
-            if each in ['Acc_magnitude_avg', 'eda_avg', 'Temp_avg', 'movement_intensity']:
+            if each in ['Acc_magnitude_avg', 'eda_avg', 'Temp_avg', 'movement_intensity']: # create line charts for these variables
 
                 fig.append_trace(go.Line(
                     x=[xvar.UTC_Datetime for xvar in data],
                     y=[getattr(yvar, each) for yvar in data],
                 ), row=index + 1, col=1)
 
-            elif each in ['Steps', 'rest', 'on_wrist']:
+            elif each in ['Steps', 'rest', 'on_wrist']: # create bar charts for these variables
                 fig.append_trace(go.Bar(
                     x=[xvar.UTC_Datetime for xvar in data],
                     y=[getattr(yvar, each) for yvar in data],
                 ), row=index + 1, col=1)
             if index == len(y_axis) - 1:
                 fig.update_xaxes(title_text=time_label, row=index + 1, col=1)
-        fig.update_layout(height=1200, width=1200, title_text="Sensor Data", legend_title_text='Variables', )
+
+        fig.update_layout(height=1200, width=1200, title_text="Sensor Data", legend_title_text='Variables', ) # update layout for all charts to match css styling
         fig.update_layout(
             font_family='Arial, sans-serif',
             font_size=16,
@@ -127,5 +127,6 @@ def main_page(request):
         )
         chart = fig.to_html()
         context['chart'] = chart
+
 
     return render(request, 'main/main_page.html', context)
