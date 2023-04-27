@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 
 {% block title %}
-main page
+Upload Data
 {% endblock title %}
 
 {% block content %}
+<h1> Upload Data </h1>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/csvs/upload">Data Loader</a></li>
+        </ul>
+    </nav>
+    <div id="logo"></div>
+</header>
 <form action="" method="Post" class="ui form" enctype="multipart/form-data">
     {% csrf_token %}
     {{form}}
